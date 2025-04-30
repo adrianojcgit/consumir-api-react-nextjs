@@ -1,6 +1,12 @@
+//A diretiva 'use client' é usada para indicar que este componente é executado no cliente
+//Essa diretiva é especifica para Next.js 13+ quando se utiliza a renderização no lado do cliente.
 'use client'
+//Importa hooks do React para usar o estado.
 import { useEffect, useState } from "react";
+//Importa a instância do axios configurada para fazer requisições para a API
 import instance from "@/services/api";
+//Importar componente para criar link
+import Link from "next/link";
 
 interface User{
     id: number,
@@ -31,7 +37,9 @@ export default function Users(){
     return(
         <div>
             <h1>Listar Usuário</h1>
-            {error && <p style={{color: "#f00"}}>erro</p>}
+            <Link href={"/users/create"}>Cadastrar</Link>
+            {/*Exibe mensagem de erro*/}
+            {error && <p style={{color: "#f00"}}>{error}</p>}
             <table>
                 <thead>
                     <tr>
