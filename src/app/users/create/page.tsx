@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import instance from "@/services/api";
 //Importar componente para criar link
 import Link from "next/link";
+//Importar o componente com o Menu
+import Menu from "@/components/Menu"
 
 export default function CreateUser(){
     //Estado para o campo name
@@ -33,8 +35,7 @@ export default function CreateUser(){
                 name: name,
                 email: email,
             });
-
-            console.log(response.data.message);
+            
             //Exibir mensagem de sucesso.
             setSuccess(response.data.message);
             //Limpa o campo do formulário
@@ -50,41 +51,51 @@ export default function CreateUser(){
     }
 
     return(
-        <div>
-            <h1>Cadastrar Usuário</h1>
-            <Link href={"/users/list"}>Listar</Link>
-            {/*Exibe mensagem de erro*/}
-            {error && <p style={{color: "#f00"}}>{error}</p>}
-            {/*Exibe mensagem de sucesso*/}
-            {success && <p style={{color: "#086"}}>{success}</p>}<br/>
+        <div className="flex flex-col h-screen bg-gray-100 text-black"> 
+            {/* Menu superior */}
+            <Menu />
+            {/* Conteúdo Principal */}
+            <div className="flex-1 px-2 py-6 max-w-6xl mx-auto w-full">
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-2xl font-bold">Cadastrar Usuário</h1>
+                    <Link href={"/users/list"} className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Listar</Link>
+                </div>
+                {/*Exibe mensagem de erro*/}
+                {error && <p className="text-red-500 mt-4">{error}</p>}
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="name">Nome:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        placeholder="Nome completo do usuário"
-                        value={name}
-                        //Ao fazer alguma alteração chame uma função (e) e essa função recebe como parametro um evento
-                        //setName recebe o valor que estiver dento do parâmetro (e) a propriedade (target) que possuí o valor (value)
-                        onChange={(e) => setName(e.target.value)}
-                        className="border p-1"
-                    />
-                </div>
-                <div>
-                    <label htmlFor="email">E-mail:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Melhor e-mail do usuário"
-                        value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                        className="border p-1"
-                    />
-                </div>
-                <button type="submit">Cadastrar</button>
-            </form>
+                {/*Exibe mensagem de sucesso*/}
+                {success && <p className="text-green-500 mt-4">{success}</p>}<br/>
+
+                <form onSubmit={handleSubmit} className="mt-6 bg-white shadow-md rounded-lg p-6">
+                    <div className="mb-4">
+                        <label htmlFor="name" className="block text-sm font-semibold">Nome:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Nome completo do usuário"
+                            value={name}
+                            //Ao fazer alguma alteração chame uma função (e) e essa função recebe como parametro um evento
+                            //setName recebe o valor que estiver dento do parâmetro (e) a propriedade (target) que possuí o valor (value)
+                            onChange={(e) => setName(e.target.value)}
+                            className="border p-2 w-full mt-1 rounded-md border-blue-100 shadow-sm 
+                                        focus:border-blue-300 focus:ring focus:ring-blue-200 focus:outline-none"
+                        />
+                    </div>
+                    <div  className="mb-4">
+                        <label htmlFor="email" className="block text-sm font-semibold">E-mail:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Melhor e-mail do usuário"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="border p-2 w-full mt-1 rounded-md border-blue-100 shadow-sm 
+                                        focus:border-blue-300 focus:ring focus:ring-blue-200 focus:outline-none"
+                        />
+                    </div>
+                    <button type="submit" className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600">Cadastrar</button>
+                </form>
+            </div>
         </div>
     )
 }
